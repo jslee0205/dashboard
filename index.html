@@ -261,9 +261,9 @@ function build(){
  const E=[...ev.values()];NE=E.length;
  info=Object.fromEntries(MEMBERS.map(n=>[n,{n,h:[]}]));
  E.forEach(e=>e.p.forEach(n=>{if(info[n])info[n].h.push(e)}));
- const ds=E.map(e=>e.d).sort(),base=ds[ds.length-1]||'';
+ const base=new Intl.DateTimeFormat('sv-SE',{timeZone:'Asia/Seoul'}).format(new Date());
  const BASE=new Date(base);
- MEMBERS.forEach(n=>{const m=info[n];m.h.sort((x,y)=>y.d.localeCompare(x.d));m.last=m.h[0]||null;m.ago=m.last?Math.round((BASE-new Date(m.last.d))/864e5):null});
+ MEMBERS.forEach(n=>{const m=info[n];m.h.sort((x,y)=>y.d.localeCompare(x.d));m.last=m.h[0]||null;m.ago=m.last?Math.max(0,Math.round((BASE-new Date(m.last.d))/864e5)):null});
  $("s2").textContent=`기준일 ${fmt(base)} · 온라인 벙 제외 · 현재 회원 ${MEMBERS.length}명`;
  render();
 }
