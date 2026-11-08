@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>벙 참여현황</title>
+<style>
+*{box-sizing:border-box}
+:root{--tb:#fff;--tbd:#e3e6ec;--tt:#1d2330;--tm:#6b7385;--ta:#4f6ef7;color-scheme:light dark;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root{--tb:#1b1e27;--tbd:#2b3040;--tt:#e8eaf0;--tm:#9099ad;--ta:#8da0ff}}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--tb);font-family:-apple-system,"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",sans-serif;line-height:1.5}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--tb);z-index:10}
+.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;display:flex;gap:4px;justify-content:center;background:var(--tb);border-bottom:1px solid var(--tbd);padding:6px 8px 0}
+.tabs button{font:inherit;font-size:15px;font-weight:600;padding:10px 20px;border:0;border-bottom:3px solid transparent;background:none;color:var(--tm);cursor:pointer}
+.tabs button.on{color:var(--ta);border-bottom-color:var(--ta)}
+.pane{display:none;min-height:100vh;background:var(--bg);color:var(--tx)}
+.pane.on{display:block}
+
+/* ---- 참여현황 ---- */
+#p1{--bg:#f6f7f9;--card:#fff;--tx:#1d2330;--mut:#6b7385;--bd:#e3e6ec;--ac:#4f6ef7;--ac2:#f59e0b;--c1:#4f6ef7;--c2:#f59e0b;--c3:#10b981;--c4:#ec4899;--c5:#8b5cf6;--c6:#06b6d4}
+@media (prefers-color-scheme:dark){#p1{--bg:#12141a;--card:#1b1e27;--tx:#e8eaf0;--mut:#9099ad;--bd:#2b3040}}
+#p1 .wrap{max-width:1100px;margin:0 auto;padding:20px 16px 48px}
+#p1 h1{font-size:22px;margin:0 0 4px}#p1 h2{font-size:15px;margin:0 0 12px}
+#p1 .sub{color:var(--mut);font-size:13px}
+#p1 .top{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;justify-content:space-between;margin-bottom:16px}
+#p1 select,#p1 input,#p1 textarea,#p1 button{font:inherit;color:var(--tx);background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:7px 10px}
+#p1 button{cursor:pointer}#p1 button:hover{border-color:var(--ac)}
+#p1 .ctrl{display:flex;gap:8px;flex-wrap:wrap}
+#p1 .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:16px}
+#p1 .card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:16px}
+#p1 .kpi b{display:block;font-size:28px;line-height:1.2}#p1 .kpi span{color:var(--mut);font-size:13px}
+#p1 .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+@media (max-width:720px){#p1 .grid{grid-template-columns:1fr}}
+#p1 .scroll{overflow-x:auto}
+#p1 table{width:100%;border-collapse:collapse;font-size:14px}
+#p1 th,#p1 td{padding:8px 10px;text-align:right;border-bottom:1px solid var(--bd);white-space:nowrap}
+#p1 th:first-child,#p1 td:first-child,#p1 th.l,#p1 td.l{text-align:left}
+#p1 th{color:var(--mut);font-weight:600;cursor:pointer;user-select:none;font-size:13px}
+#p1 th.on{color:var(--ac)}
+#p1 .bar{display:inline-block;height:8px;border-radius:4px;background:var(--ac);vertical-align:middle;min-width:2px}
+#p1 .row{display:flex;align-items:center;gap:8px;margin:7px 0;font-size:14px}
+#p1 .row .n{width:64px;flex:none}#p1 .row .t{flex:1;background:var(--bd);height:10px;border-radius:5px;overflow:hidden}
+#p1 .row .t i{display:block;height:100%;border-radius:5px}#p1 .row .v{width:70px;text-align:right;color:var(--mut);font-size:13px}
+#p1 .tag{display:inline-block;padding:1px 8px;border-radius:10px;font-size:12px;color:#fff}
+#p1 details{margin-top:8px}#p1 textarea{width:100%;min-height:140px;font-family:ui-monospace,Menlo,monospace;font-size:12px}
+#p1 .chart{display:flex;align-items:flex-end;gap:6px;height:140px;padding-top:8px}
+#p1 .chart div{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;font-size:11px;color:var(--mut)}
+#p1 .chart i{display:block;width:100%;max-width:36px;background:var(--ac);border-radius:4px 4px 0 0}
+#p1 .msg{color:var(--mut);font-size:12px;margin-top:6px}
+
+/* ---- 최종참여일자 ---- */
+#p2{--bg:#f7f7f5;--card:#fff;--tx:#1f1f1d;--sub:#6b6b66;--bd:#e4e4df;--ac:#d9480f;--ok:#2b8a3e;--okbg:#e6f4ea;--mid:#e67700;--midbg:#fff3e0;--none:#868e96;--nonebg:#f1f3f5}
+@media (prefers-color-scheme:dark){#p2{--bg:#161615;--card:#212120;--tx:#eeeee9;--sub:#a3a39c;--bd:#33332f;--ac:#ff8c5a;--ok:#69db7c;--okbg:#1d3324;--mid:#ffa94d;--midbg:#3a2c16;--none:#adb5bd;--nonebg:#2b2b29}}
+#p2 .w{max-width:760px;margin:0 auto;padding:20px 14px 40px}
+#p2 h1{font-size:20px;margin:0 0 4px}
+#p2 .s{color:var(--sub);font-size:13px;margin-bottom:14px}
+#p2 .ctl{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+#p2 input{flex:1;min-width:140px;padding:9px 12px;border:1px solid var(--bd);border-radius:10px;background:var(--card);color:var(--tx);font-size:14px}
+#p2 button{padding:8px 12px;border:1px solid var(--bd);border-radius:10px;background:var(--card);color:var(--tx);font-size:13px;cursor:pointer}
+#p2 button.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+#p2 .sum{display:flex;gap:8px;margin-bottom:12px}
+#p2 .sum div{flex:1;background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:8px 10px;font-size:12px;color:var(--sub)}
+#p2 .sum b{display:block;font-size:20px;color:var(--tx)}
+#p2 .row{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:10px 12px;margin-bottom:8px;display:grid;grid-template-columns:1fr auto;gap:2px 10px;cursor:pointer}
+#p2 .nm{font-weight:600;font-size:15px}
+#p2 .dt{text-align:right;font-weight:600;font-variant-numeric:tabular-nums}
+#p2 .tag{display:inline-block;font-size:11px;padding:1px 7px;border-radius:99px;margin-left:6px;font-weight:600}
+#p2 .t0{background:var(--okbg);color:var(--ok)}#p2 .t1{background:var(--midbg);color:var(--mid)}#p2 .t2{background:var(--nonebg);color:var(--none)}
+#p2 .hist{grid-column:1/-1;display:none;border-top:1px dashed var(--bd);margin-top:8px;padding-top:8px;font-size:12px}
+#p2 .hist div{padding:2px 0;color:var(--sub)}
+#p2 .row.open .hist{display:block}
+</style>
+</head>
+<body>
+<nav class="tabs">
+  <button data-t="main" class="on">참여현황</button>
+  <button data-t="last">최종참여일자</button>
+</nav>
+
+<!-- ===== 탭1: 참여현황 (메인) ===== -->
+<section class="pane on" id="p1">
+<div class="wrap">
+  <div class="top">
+    <div><h1>🍻 참여현황</h1><div class="sub" id="range"></div></div>
+    <div class="ctrl"><select id="month"></select><input id="q" placeholder="이름 검색"></div>
+  </div>
+  <div class="kpis" id="kpis"></div>
+  <div class="grid">
+    <div class="card"><h2>주제구분별 벙 수</h2><div id="cat"></div></div>
+    <div class="card"><h2>날짜별 벙 수</h2><div class="chart" id="daily"></div></div>
+  </div>
+  <div class="card" style="margin-bottom:16px">
+    <h2>이름별 통계 <span class="sub">(헤더를 누르면 정렬)</span></h2>
+    <div class="scroll"><table id="people"></table></div>
+  </div>
+  </div>
+</section>
+
+<!-- ===== 탭2: 최종참여일자 ===== -->
+<section class="pane" id="p2">
+<div class="w">
+<h1>최종참여일자</h1>
+<div class="s" id="s2"></div>
+<div class="ctl">
+<input id="q2" placeholder="이름 검색">
+<button data-s="recent" class="on">최근 참여순</button><button data-s="old">오래된순</button><button data-s="name">이름순</button>
+</div>
+<div id="list2"></div>
+</div>
+</section>
+
+<!-- 데이터: 날짜|벙제목|구분|벙주|참석자|온라인(Y) — 새 데이터는 아래 맨 끝에 한 줄씩 추가 -->
+<script id="data" type="text/plain">
+2026-10-26|엽떡 벙 건대|밥벙|이누|이누,득구|
+2026-10-27|정기 배민|배민|명조|명조,크앙,시온,제이,동혁,죠르디|
+2026-10-28|저녁식사 벙 노술 구의|밥벙|이누|이누,라이언,루루,동동|
+2026-10-28|메가커피|밥벙|이누|이누,루루,동동|
+2026-10-28|어김없이 아차산|운동벙|찌릿|찌릿,졍이,크앙|
+2026-10-28|운동후 등갈비찜 촵촵|밥벙|졍이|졍이,크앙,계수,찌릿|
+2026-10-29|왕십리 밥벙|밥벙|피츄|피츄,모과,찌릿,죠르디,이누,용과,라이언,계수|
+2026-10-29|왕십리 커피|밥벙|계수|계수,피츄,모과,찌릿,죠르디,이누,용과,라이언|
+2026-10-30|왕십리 꼬기 묵쟈|술벙|둥|둥,모모,동구,이누|
+2026-10-30|왕십리 2차|술벙|둥|둥,모모,동구,이누,슬픈|
+2026-10-31|참치드실분|술벙|동구|동구,졍이|
+2026-10-31|장안동 밥벙|밥벙|죠르디|죠르디,야르,크앙|
+2026-10-31|장안동 소통|술벙|졍이|졍이,동구,죠르디,야르,크앙|
+2026-10-31|장안동 꼬다야|술벙|졍이|졍이,크앙,계수,슬픈,야르,동구,득구|
+2026-11-01|우이동 능이백숙|밥벙|졍이|졍이,동구,둥,모모|
+2026-11-01|볼링|운동벙|둥|둥,졍이,모모,동구|
+2026-11-01|첫날부터 배민 죠져잇|운동벙|찌릿|찌릿,크앙,라이언,동혁|
+2026-11-01|배민 후 간술|술벙|찌릿|찌릿,곡,크앙,동혁|
+2026-11-02|성수 훼미리손칼국수보쌈|술벙|졍이|졍이,찌릿,라이언,계수,용과,선율,거북,이누|
+2026-11-03|배민 후 꼬랑에서 치맥|술벙|졍이|졍이,라이언|
+2026-11-03|온라인 머더미스터리|게임벙|둥|둥,죠르디,이누,모모|Y
+2026-11-04|용두동 나정순쭈꾸미 뿌시러가자|술벙|졍이|졍이,계수,윤이|
+2026-11-04|식후커벙|커피벙|졍이|졍이,계수,윤이|
+2026-11-05|대방어&소주|술벙|계수|계수,둥,모모,죠르디,이누,루루,라이언,투브|
+2026-11-05|사가정 배민(면남초)|운동벙|크앙|크앙,찌릿|
+2026-11-05|중곡동 이자카야|술벙|찌릿|찌릿,투브,계수,라이언,크앙,죠르디|
+2026-11-06|왕십리 장모 족발|술벙|졍이|졍이,라이언,피츄|
+2026-11-06|2차는 이자카야|술벙|졍이|졍이,라이언,피츄|
+2026-11-07|생활맥주 자양점|술벙|모모|모모,둥,이누|
+2026-11-07|술먹쟝|술벙|루루|루루,삐빅,슬픈|
+2026-11-08|일욜배민 실내|운동벙|크앙|크앙,찐찐|
+</script>
+<script>
+/* ---------- 탭 전환 ---------- */
+(function(){
+  const btns=document.querySelectorAll('.tabs button');
+  function show(t){
+    if(t!=='last')t='main';
+    btns.forEach(b=>b.classList.toggle('on',b.dataset.t===t));
+    document.getElementById('p1').classList.toggle('on',t==='main');
+    document.getElementById('p2').classList.toggle('on',t==='last');
+    window.scrollTo(0,0);
+  }
+  btns.forEach(b=>b.onclick=()=>{show(b.dataset.t);try{location.hash=b.dataset.t==='last'?'last':'main'}catch(e){}});
+  window.addEventListener('hashchange',()=>show(location.hash.slice(1)));
+  show(location.hash.slice(1));
+})();
+
+/* ---------- 참여현황 ---------- */
+(function(){
+const SRC=document.getElementById('data').textContent.trim();
+const RAW=['이름\t날짜\t벙제목\t벙주제구분\t벙주여부\t연월\t온라인여부'].concat(SRC.split('\n').flatMap(l=>{
+  const [d,t,k,h,p,o]=l.split('|'),[y,m,dd]=d.split('-');
+  return p.split(',').map(n=>[n,`${y}. ${+m}. ${+dd}`,t,k,n===h?'Y':'',y+m,(o||'').trim()].join('\t'));
+})).join('\n');
+
+const COLORS=['--c1','--c2','--c3','--c4','--c5','--c6'];
+let rows=[], cats=[], sortKey='part', sortDir=-1;
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+function parse(text){
+  const out=[];
+  text.split(/\r?\n/).forEach(ln=>{
+    if(!ln.trim())return;
+    const c=ln.split('\t').map(s=>s.trim());
+    if(c[0]==='닉네임'||c[0]==='이름'||c.length<4)return;
+    const d=(c[1]||'').replace(/\s/g,'').replace(/\.$/,'').split('.');
+    const date=d.length===3?`${d[0]}-${d[1].padStart(2,'0')}-${d[2].padStart(2,'0')}`:c[1];
+    out.push({name:c[0],date,title:c[2],cat:c[3],host:(c[4]||'').toUpperCase()==='Y',ym:c[5]||date.slice(0,7).replace('-',''),on:(c[6]||'').toUpperCase()==='Y'});
+  });
+  return out;
+}
+function load(text){rows=parse(text);cats=[...new Set(rows.map(r=>r.cat))];
+  const ms=[...new Set(rows.map(r=>r.ym))].sort().reverse();
+  $('month').innerHTML='<option value="all">전체 기간</option>'+ms.map(m=>`<option value="${m}">${m.slice(0,4)}년 ${+m.slice(4)}월</option>`).join('');
+  const cur=new Date(),cym=''+cur.getFullYear()+String(cur.getMonth()+1).padStart(2,'0');
+  $('month').value=ms.includes(cym)?cym:(ms[0]||'all');
+  window.ROWS=rows;if(window.onData)window.onData();
+  render();}
+const catColor=c=>`var(${COLORS[cats.indexOf(c)%COLORS.length]})`;
+
+function render(){
+  const m=$('month').value, q=$('q').value.trim();
+  const data=rows.filter(r=>m==='all'||r.ym===m);
+  const ev=new Map();
+  data.forEach(r=>{const k=r.date+'|'+r.title;
+    if(!ev.has(k))ev.set(k,{date:r.date,title:r.title,cat:r.cat,host:'',on:r.on,ppl:[]});
+    const e=ev.get(k);e.ppl.push(r.name);if(r.host)e.host=r.name;});
+  const events=[...ev.values()].sort((a,b)=>b.date.localeCompare(a.date));
+  const pp=new Map();
+  data.forEach(r=>{
+    if(!pp.has(r.name))pp.set(r.name,{name:r.name,part:0,host:0,cats:{}});
+    const p=pp.get(r.name);p.part++;if(r.host)p.host++;p.cats[r.cat]=(p.cats[r.cat]||0)+1;});
+  let people=[...pp.values()];
+  people.forEach(p=>{p.rate=events.length?p.part/events.length:0;cats.forEach(c=>p['c:'+c]=p.cats[c]||0)});
+  const total=data.length, dates=[...new Set(data.map(r=>r.date))].sort();
+  $('range').textContent=dates.length?`${dates[0]} ~ ${dates[dates.length-1]} · ${dates.length}일간 기록`:'데이터 없음';
+
+  const top=[...people].sort((a,b)=>b.part-a.part)[0], topH=[...people].sort((a,b)=>b.host-a.host)[0];
+  const kp=[
+    [events.length,'총 벙 수'],[total,'총 참여 건수'],[people.length,'참여자 수'],
+    [events.length?(total/events.length).toFixed(1):0,'벙당 평균 인원'],
+    [top?`${esc(top.name)} <small>${top.part}회</small>`:'-','최다 참여'],
+    [topH&&topH.host?`${esc(topH.name)} <small>${topH.host}회</small>`:'-','최다 벙주']
+  ];
+  $('kpis').innerHTML=kp.map(k=>`<div class="card kpi"><b>${k[0]}</b><span>${k[1]}</span></div>`).join('');
+
+  const cc={};events.forEach(e=>cc[e.cat]=(cc[e.cat]||0)+1);
+  const mx=Math.max(1,...Object.values(cc));
+  $('cat').innerHTML=Object.entries(cc).sort((a,b)=>b[1]-a[1]).map(([c,n])=>
+    `<div class="row"><span class="n">${esc(c)}</span><span class="t"><i style="width:${n/mx*100}%;background:${catColor(c)}"></i></span><span class="v">${n}벙 (${Math.round(n/events.length*100)}%)</span></div>`).join('')||'<span class="sub">없음</span>';
+
+  const dc={};events.forEach(e=>dc[e.date]=(dc[e.date]||0)+1);
+  const dk=Object.keys(dc).sort(), dm=Math.max(1,...Object.values(dc));
+  $('daily').innerHTML=dk.map(d=>`<div><span>${dc[d]}</span><i style="height:${dc[d]/dm*100}px"></i><span>${d.slice(5).replace('-','/')}</span></div>`).join('');
+
+  if(q)people=people.filter(p=>p.name.includes(q));
+  people.sort((a,b)=>{const x=a[sortKey],y=b[sortKey];
+    const r=typeof x==='string'?x.localeCompare(y,'ko'):x-y;return (r||b.part-a.part||a.name.localeCompare(b.name,'ko'))*(typeof x==='string'?sortDir*-1:sortDir)});
+  const pm=Math.max(1,...people.map(p=>p.part));
+  const cols=[['name','이름'],['part','참여횟수'],['host','벙주횟수'],['rate','참여율']];
+  $('people').innerHTML=`<thead><tr><th class="l">#</th>${cols.map(([k,l])=>`<th data-k="${k}" class="${k==='name'?'l ':''}${sortKey===k?'on':''}">${l}${sortKey===k?(sortDir<0?' ▼':' ▲'):''}</th>`).join('')}<th class="l"></th>${cats.map(c=>`<th data-k="c:${c}" class="${sortKey==='c:'+c?'on':''}">${esc(c)}</th>`).join('')}</tr></thead><tbody>`+
+    people.map((p,i)=>`<tr><td class="l">${i+1}</td><td class="l"><b>${esc(p.name)}</b></td><td>${p.part}</td><td>${p.host}</td><td>${Math.round(p.rate*100)}%</td><td class="l"><span class="bar" style="width:${p.part/pm*100}px"></span></td>${cats.map(c=>`<td>${p.cats[c]||'·'}</td>`).join('')}</tr>`).join('')+'</tbody>';
+  document.querySelectorAll('#people th[data-k]').forEach(th=>th.onclick=()=>{
+    const k=th.dataset.k;
+    sortDir=sortKey===k?-sortDir:(k==='name'?1:-1);sortKey=k;
+    render();});
+
+}
+$('month').onchange=render;$('q').oninput=render;
+load(RAW);
+})();
+
+/* ---------- 최종참여일자 (온라인 제외) ---------- */
+(function(){
+const MEMBERS="찌릿 계수 둥 라이언 졍이 크앙 강인 거북 곡 꾸꾸 누누 다바크 동구 동동 동혁 루루 루새 만보 모과 모모 미르 민몽 삐빅 선율 수찬 슬픈 시온 야르 어피치 용과 윤이 으차 이누 이미 제이 조로 죠디 죠르디 직콩 징구 찐찐 커피 탄산 테리 투브 피츄 현".split(" ");
+let info={},sort="recent",open=new Set(),NE=0;
+const $=id=>document.getElementById(id);
+const fmt=d=>d.replace(/-/g,". ");
+const dow=d=>"일월화수목금토"[new Date(d).getDay()];
+function build(){
+ const ev=new Map();
+ window.ROWS.filter(r=>!r.on).forEach(r=>{const k=r.date+'|'+r.title;
+  if(!ev.has(k))ev.set(k,{d:r.date,t:r.title,k:r.cat,h:'',p:[]});
+  const e=ev.get(k);e.p.push(r.name);if(r.host)e.h=r.name;});
+ const E=[...ev.values()];NE=E.length;
+ info=Object.fromEntries(MEMBERS.map(n=>[n,{n,h:[]}]));
+ E.forEach(e=>e.p.forEach(n=>{if(info[n])info[n].h.push(e)}));
+ const ds=E.map(e=>e.d).sort(),base=ds[ds.length-1]||'';
+ const BASE=new Date(base);
+ MEMBERS.forEach(n=>{const m=info[n];m.h.sort((x,y)=>y.d.localeCompare(x.d));m.last=m.h[0]||null;m.ago=m.last?Math.round((BASE-new Date(m.last.d))/864e5):null});
+ $("s2").textContent=`기준일 ${fmt(base)} · 온라인 벙 제외 · 현재 회원 ${MEMBERS.length}명`;
+ render();
+}
+function render(){
+ const q=$("q2").value.trim();
+ let arr=MEMBERS.map(n=>info[n]).filter(m=>m.n.includes(q));
+ const L=m=>m.last?m.last.d:"";
+ arr.sort((a,b)=>{
+  if(sort==="name")return a.n.localeCompare(b.n,"ko");
+  if(!a.last&&!b.last)return a.n.localeCompare(b.n,"ko");
+  if(!a.last)return 1;if(!b.last)return -1;
+  return sort==="old"?L(a).localeCompare(L(b)):L(b).localeCompare(L(a))||b.h.length-a.h.length;
+ });
+ $("list2").innerHTML=arr.map(m=>{
+  const tag=!m.last?'<span class="tag t2">기록 없음</span>':m.ago<=4?`<span class="tag t0">${m.ago===0?"오늘":m.ago+"일 전"}</span>`:`<span class="tag t1">${m.ago}일 전</span>`;
+  const hist=m.h.map(e=>`<div>${fmt(e.d)} (${dow(e.d)}) · ${e.t} · ${e.k}${e.h===m.n?" · 벙주":""}</div>`).join("");
+  return `<div class="row${open.has(m.n)?" open":""}" data-n="${m.n}">
+  <div class="nm">${m.n}${tag}</div><div class="dt">${m.last?fmt(m.last.d)+" ("+dow(m.last.d)+")":"-"}</div><div class="hist">${hist||"참여 기록 없음"}</div></div>`}).join("");
+}
+$("q2").oninput=render;
+document.querySelectorAll("#p2 button").forEach(b=>b.onclick=()=>{sort=b.dataset.s;document.querySelectorAll("#p2 button").forEach(x=>x.classList.toggle("on",x===b));render()});
+$("list2").onclick=e=>{const r=e.target.closest(".row");if(!r)return;const n=r.dataset.n;open.has(n)?open.delete(n):open.add(n);r.classList.toggle("open")};
+window.onData=build;build();
+})();
+</script>
+</body>
+</html>
