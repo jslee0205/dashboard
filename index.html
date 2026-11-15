@@ -18,7 +18,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .pane.on{display:block}
 
 /* ---- 참여현황 ---- */
-#p1{--bg:#f6f7f9;--card:#fff;--tx:#1d2330;--mut:#6b7385;--bd:#e3e6ec;--ac:#4f6ef7;--ac2:#f59e0b;--c1:#4f6ef7;--c2:#f59e0b;--c3:#10b981;--c4:#ec4899;--c5:#8b5cf6;--c6:#06b6d4}
+#p1{--bg:#f6f7f9;--card:#fff;--tx:#1d2330;--mut:#6b7385;--bd:#e3e6ec;--ac:#4f6ef7;--ac2:#f59e0b;--c1:#4f6ef7;--c2:#f59e0b;--c3:#10b981;--c4:#ec4899;--c5:#8b5cf6;--c6:#06b6d4;--c7:#ef4444;--c8:#84cc16}
 @media (prefers-color-scheme:dark){#p1{--bg:#12141a;--card:#1b1e27;--tx:#e8eaf0;--mut:#9099ad;--bd:#2b3040}}
 #p1 .wrap{max-width:1100px;margin:0 auto;padding:20px 16px 48px}
 #p1 h1{font-size:22px;margin:0 0 4px}#p1 h2{font-size:15px;margin:0 0 12px}
@@ -152,6 +152,11 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 2026-11-12|수막TIME|술벙|루루|루루,둥,모모,슬픈,모과,동동,민몽,이동규|
 2026-11-12|옷도 받고 닭한마리도 먹고|술벙|졍이|졍이,피츄,죠르디,누누,계수,갑춘,크앙,어피치|
 2026-11-12|답십리 오빠화이팅|술벙|졍이|졍이,죠르디,계수,갑춘,크앙,민몽,테리|
+2026-11-13|불금에 찜방이나 가자고|놀벙|크앙|크앙,졍이,징구,용과|
+2026-11-14|나주곰탕|밥벙|졍이|졍이,크앙,징구,용과|
+2026-11-14|하남 당일 글램핑|밥벙|죠르디|죠르디,찐찐,곡|
+2026-11-15|술한잔하든가~|술벙|크앙|크앙,계수,갑춘,졍이,루새|
+2026-11-15|노래방|술벙|계수|계수,갑춘,졍이,루새|
 </script>
 <script>
 /* ---------- 탭 전환 ---------- */
@@ -177,7 +182,7 @@ const RAW=['이름\t날짜\t벙제목\t벙주제구분\t벙주여부\t연월\t�
   return p.split(',').map(n=>[n,`${y}. ${+m}. ${+dd}`,t,k,n===h?'Y':'',y+m,(o||'').trim()].join('\t'));
 })).join('\n');
 
-const COLORS=['--c1','--c2','--c3','--c4','--c5','--c6'];
+const COLORS=['--c1','--c2','--c3','--c4','--c5','--c6','--c7','--c8'];
 let rows=[], cats=[], sortKey='part', sortDir=-1;
 const $=id=>document.getElementById(id);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
