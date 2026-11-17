@@ -224,7 +224,7 @@ function render(){
   data.forEach(r=>{
     if(!pp.has(r.name))pp.set(r.name,{name:r.name,part:0,host:0,cats:{}});
     const p=pp.get(r.name);p.part++;if(r.host)p.host++;p.cats[r.cat]=(p.cats[r.cat]||0)+1;});
-  let people=[...pp.values()];
+  let people=[...pp.values()].filter(p=>!window.MEMBERS||window.MEMBERS.includes(p.name));
   people.forEach(p=>{p.rate=events.length?p.part/events.length:0;cats.forEach(c=>p['c:'+c]=p.cats[c]||0)});
   const total=data.length, dates=[...new Set(data.map(r=>r.date))].sort();
   $('range').textContent=dates.length?`${dates[0]} ~ ${dates[dates.length-1]} · ${dates.length}일간 기록`:'데이터 없음';
@@ -261,13 +261,13 @@ function render(){
 
 }
 $('month').onchange=render;$('q').oninput=render;
-load(RAW);
+window.renderP1=render;load(RAW);
 })();
 
 /* ---------- 최종참여일자 (온라인 제외) ---------- */
 (function(){
 const MEMBERS="찌릿 계수 둥 졍이 크앙 갑춘 강인 거북 곡 깡깡 꾸꾸 누누 동구 동동 동혁 두두 디디 땅땅 루루 루새 만보 모과 모모 미르 민몽 선율 수찬 슬픈 시오 시온 어피치 용과 용용 워니 윤이 으차 이누 이동규 이미 정크 제이 죠르디 직콩 징구 찐찐 춘식 커피 탄산 테리 투브 피츄 해영 혀니 현".split(" ");
-let info={},sort="recent",open=new Set(),NE=0;
+window.MEMBERS=MEMBERS;let info={},sort="recent",open=new Set(),NE=0;
 const $=id=>document.getElementById(id);
 const fmt=d=>d.replace(/-/g,". ");
 const dow=d=>"일월화수목금토"[new Date(d).getDay()];
@@ -304,7 +304,7 @@ function render(){
 $("q2").oninput=render;
 document.querySelectorAll("#p2 button").forEach(b=>b.onclick=()=>{sort=b.dataset.s;document.querySelectorAll("#p2 button").forEach(x=>x.classList.toggle("on",x===b));render()});
 $("list2").onclick=e=>{const r=e.target.closest(".row");if(!r)return;const n=r.dataset.n;open.has(n)?open.delete(n):open.add(n);r.classList.toggle("open")};
-window.onData=build;build();
+window.onData=build;build();if(window.renderP1)window.renderP1();
 })();
 </script>
 </body>
