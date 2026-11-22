@@ -18,7 +18,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .pane.on{display:block}
 
 /* ---- 참여현황 ---- */
-#p1{--bg:#f6f7f9;--card:#fff;--tx:#1d2330;--mut:#6b7385;--bd:#e3e6ec;--ac:#4f6ef7;--ac2:#f59e0b;--c1:#4f6ef7;--c2:#f59e0b;--c3:#10b981;--c4:#ec4899;--c5:#8b5cf6;--c6:#06b6d4;--c7:#ef4444;--c8:#84cc16}
+#p1{--bg:#f6f7f9;--card:#fff;--tx:#1d2330;--mut:#6b7385;--bd:#e3e6ec;--ac:#4f6ef7;--ac2:#f59e0b;--c1:#4f6ef7;--c2:#f59e0b;--c3:#10b981;--c4:#ec4899;--c5:#8b5cf6;--c6:#06b6d4;--c7:#ef4444;--c8:#84cc16;--c9:#14b8a6}
 @media (prefers-color-scheme:dark){#p1{--bg:#12141a;--card:#1b1e27;--tx:#e8eaf0;--mut:#9099ad;--bd:#2b3040}}
 #p1 .wrap{max-width:1100px;margin:0 auto;padding:20px 16px 48px}
 #p1 h1{font-size:22px;margin:0 0 4px}#p1 h2{font-size:15px;margin:0 0 12px}
@@ -164,6 +164,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 2026-11-18|성수 브루크|카페벙|어피치|어피치,루루,슬픈,두두,꾸꾸,누누|
 2026-11-20|불금에나와요빨리~술식사벙|술벙|크앙|크앙,곡,팝콘|
 2026-11-21|가나디벙|카페벙|으차|으차,거북|
+2026-11-22|가평펜션|펜션벙|크앙|크앙,계수,졍이,징구,곡|
 </script>
 <script>
 /* ---------- 탭 전환 ---------- */
@@ -189,7 +190,7 @@ const RAW=['이름\t날짜\t벙제목\t벙주제구분\t벙주여부\t연월\t�
   return p.split(',').map(n=>[n,`${y}. ${+m}. ${+dd}`,t,k,n===h?'Y':'',y+m,(o||'').trim()].join('\t'));
 })).join('\n');
 
-const COLORS=['--c1','--c2','--c3','--c4','--c5','--c6','--c7','--c8'];
+const COLORS=['--c1','--c2','--c3','--c4','--c5','--c6','--c7','--c8','--c9'];
 let rows=[], cats=[], sortKey='part', sortDir=-1;
 const $=id=>document.getElementById(id);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -269,7 +270,7 @@ window.renderP1=render;load(RAW);
 
 /* ---------- 최종참여일자 (온라인 제외) ---------- */
 (function(){
-const MEMBERS="찌릿 계수 둥 졍이 크앙 갑춘 강인 거북 곡 귀요미 깡깡 꾸꾸 누누 돌이 동구 동동 두두 들춘 디디 땅땅 루루 루새 만보 모과 모모 무지 민몽 선율 수찬 슬픈 시오 시온 어피치 용과 용용 워니 윤이 으차 이누 이동규 이미 정크 제이 죠르디 주롱 직콩 징구 찐찐 키키 탄산 테리 투브 패스 피츄 해영 혀니 현".split(" ");
+const MEMBERS="찌릿 계수 둥 졍이 크앙 갑춘 강인 거북 곡 귀요미 깡깡 꾸꾸 누누 돌이 동구 동동 두기 두두 디디 땅땅 루루 루새 만보 모과 모모 무지 민몽 선율 수찬 슬픈 시오 시온 어피치 용과 용용 워니 윤이 으차 이누 이동규 이미 정크 제이 죠르디 주롱 직콩 징구 찐찐 키키 탄산 테리 투브 패스 피츄 해영 혀니 현 흠이".split(" ");
 window.MEMBERS=MEMBERS;let info={},sort="recent",open=new Set(),NE=0;
 const $=id=>document.getElementById(id);
 const fmt=d=>d.replace(/-/g,". ");
