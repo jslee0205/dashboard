@@ -28,7 +28,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 #p1 button{cursor:pointer}#p1 button:hover{border-color:var(--ac)}
 #p1 .ctrl{display:flex;gap:8px;flex-wrap:wrap}
 #p1 .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:16px}
-#p1 .card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:16px}
+#p1 .card{min-width:0;background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:16px}
 #p1 .kpi b{display:block;font-size:28px;line-height:1.2}#p1 .kpi span{color:var(--mut);font-size:13px}
 #p1 .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
 @media (max-width:720px){#p1 .grid{grid-template-columns:1fr}}
@@ -40,13 +40,13 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 #p1 th.on{color:var(--ac)}
 #p1 .bar{display:inline-block;height:8px;border-radius:4px;background:var(--ac);vertical-align:middle;min-width:2px}
 #p1 .row{display:flex;align-items:center;gap:8px;margin:7px 0;font-size:14px}
-#p1 .row .n{width:64px;flex:none}#p1 .row .t{flex:1;background:var(--bd);height:10px;border-radius:5px;overflow:hidden}
-#p1 .row .t i{display:block;height:100%;border-radius:5px}#p1 .row .v{width:70px;text-align:right;color:var(--mut);font-size:13px}
+#p1 .row .n{width:64px;flex:none}#p1 .row .t{flex:1;background:var(--bd);height:16px;border-radius:8px;overflow:hidden}
+#p1 .row .t i{display:block;height:100%;min-width:4px;border-radius:8px}#p1 .row .v{width:70px;text-align:right;color:var(--mut);font-size:13px}
 #p1 .tag{display:inline-block;padding:1px 8px;border-radius:10px;font-size:12px;color:#fff}
 #p1 details{margin-top:8px}#p1 textarea{width:100%;min-height:140px;font-family:ui-monospace,Menlo,monospace;font-size:12px}
-#p1 .chart{display:flex;align-items:flex-end;gap:6px;height:140px;padding-top:8px}
-#p1 .chart div{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;font-size:11px;color:var(--mut)}
-#p1 .chart i{display:block;width:100%;max-width:36px;background:var(--ac);border-radius:4px 4px 0 0}
+#p1 .chart{display:flex;align-items:flex-end;gap:6px;height:150px;padding-top:8px;overflow-x:auto;max-width:100%}
+#p1 .chart div{flex:none;width:40px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;font-size:11px;color:var(--mut)}
+#p1 .chart i{display:block;width:28px;background:var(--ac);border-radius:4px 4px 0 0}
 #p1 .msg{color:var(--mut);font-size:12px;margin-top:6px}
 
 /* ---- 최종참여일자 ---- */
@@ -134,7 +134,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 2026-11-03|배민 후 꼬랑에서 치맥|술벙|졍이|졍이,라이언|
 2026-11-03|온라인 머더미스터리|게임벙|둥|둥,죠르디,이누,모모|Y
 2026-11-04|용두동 나정순쭈꾸미 뿌시러가자|술벙|졍이|졍이,계수,윤이|
-2026-11-04|식후커벙|커피벙|졍이|졍이,계수,윤이|
+2026-11-04|식후커벙|카페벙|졍이|졍이,계수,윤이|
 2026-11-05|대방어&소주|술벙|계수|계수,둥,모모,죠르디,이누,루루,라이언,투브|
 2026-11-05|사가정 배민(면남초)|운동벙|크앙|크앙,찌릿|
 2026-11-05|중곡동 이자카야|술벙|찌릿|찌릿,투브,계수,라이언,크앙,죠르디|
@@ -144,7 +144,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 2026-11-07|술먹쟝|술벙|루루|루루,삐빅,슬픈|
 2026-11-08|일욜배민 실내|운동벙|크앙|크앙,찐찐|
 2026-11-09|퇴근하고 할비가 궈주는 삼겹살|술벙|죠르디|죠르디,계수,곡,찐찐,슬픈,루루,졍이,선율|
-2026-11-09|모아커피|커피벙|계수|계수,죠르디,곡,찐찐,슬픈,루루,졍이,선율|
+2026-11-09|모아커피|카페벙|계수|계수,죠르디,곡,찐찐,슬픈,루루,졍이,선율|
 2026-11-10|화요민턴 실내(면남초)|운동벙|찌릿|찌릿,크앙,찐찐|
 2026-11-10|늦은 식사&간술|술벙|졍이|졍이,라이언,모과,용과,찌릿,민몽,크앙|
 2026-11-11|모두랑|밥벙|어피치|어피치,계수,동혁,루루,제이,탄산,슬픈,찐찐|
@@ -252,7 +252,7 @@ function render(){
 
   const dc={};events.forEach(e=>dc[e.date]=(dc[e.date]||0)+1);
   const dk=Object.keys(dc).sort(), dm=Math.max(1,...Object.values(dc));
-  $('daily').innerHTML=dk.map(d=>`<div><span>${dc[d]}</span><i style="height:${dc[d]/dm*100}px"></i><span>${d.slice(5).replace('-','/')}</span></div>`).join('');
+  $('daily').innerHTML=dk.map(d=>`<div><span>${dc[d]}</span><i style="height:${dc[d]/dm*100}px"></i><span>${d.slice(5).replace('-','/')}</span></div>`).join('');$('daily').scrollLeft=$('daily').scrollWidth;
 
   if(q)people=people.filter(p=>p.name.includes(q));
   people.sort((a,b)=>{const x=a[sortKey],y=b[sortKey];
